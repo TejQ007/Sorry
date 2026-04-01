@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>April Fool</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .box {
+      width: 220px;
+      height: 220px;
+      background: #444;
+      border-radius: 12px;
+      position: relative;
+      cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 1.2rem;
+    }
+
+    .lid {
+      position: absolute;
+      width: 220px;
+      height: 30px;
+      background: #666;
+      top: -30px;
+      border-radius: 6px;
+      transform-origin: left;
+      transition: transform 0.3s;
+    }
+
+    .duck {
+      font-size: 5rem;
+      display: none;
+      position: absolute;
+      top: -90px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .text {
+      position: absolute;
+      top: -140px;
+      font-size: 1.5rem;
+      display: none;
+      width: 300px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    #instruction {
+      position: absolute;
+      bottom: 50px;
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
+    /* walking animation */
+    @keyframes walkAround {
+      0%   { top: -90px; left: 50%; }
+      25%  { top: 220px; left: 50%; }
+      50%  { top: 220px; left: -100px; }
+      75%  { top: -90px; left: -100px; }
+      100% { top: -90px; left: 50%; }
+    }
+
+    .walk {
+      animation: walkAround 6s linear infinite;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="box" id="box">
+  <div class="lid" id="lid"></div>
+  <div class="duck" id="duck">🦆</div>
+  <div class="text" id="text">😂😂 APRIL FOOL 😂😂</div>
+  Tap Me
+</div>
+
+<div id="instruction">Tap the box 3 times 👇</div>
+
+<script>
+  let taps = 0;
+  const box = document.getElementById("box");
+  const lid = document.getElementById("lid");
+  const duck = document.getElementById("duck");
+  const text = document.getElementById("text");
+
+  const quack = new Audio("https://www.soundjay.com/animal/duck-quack-1.mp3");
+  const laugh = new Audio("https://www.soundjay.com/human/laugh-1.mp3");
+
+  box.addEventListener("click", () => {
+    taps++;
+
+    lid.style.transform = "rotate(-35deg)";
+    setTimeout(() => lid.style.transform = "rotate(0deg)", 300);
+
+    quack.currentTime = 0;
+    quack.play();
+
+    if (taps === 3) {
+      setTimeout(() => {
+        duck.style.display = "block";
+        text.style.display = "block";
+        duck.classList.add("walk");
+        laugh.play();
+      }, 300);
+    }
+  });
+</script>
+
+</body>
+</html>
